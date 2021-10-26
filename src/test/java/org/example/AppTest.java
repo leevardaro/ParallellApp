@@ -30,9 +30,10 @@ public class AppTest {
     public static String browserstackLocal = System.getenv("BROWSERSTACK_LOCAL");
     public static String browserstackLocalIdentifier = System.getenv("BROWSERSTACK_LOCAL_IDENTIFIER");
     public String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
-    public String appURL;
+    String app = System.getenv("BROWSERSTACK_APP_ID");
+ /*   public String appURL;
 
-   @BeforeTest
+  @BeforeTest
     public void setup() {
         String url = "https://api.browserstack.com/app-automate/upload";
 
@@ -45,52 +46,54 @@ public class AppTest {
         appURL = myObj.getString("app_url");
         System.out.println(appURL);
     }
-
+*/
     @Test
     public void test1() throws InterruptedException, MalformedURLException {
-        long id = Thread.currentThread().getId();
-        System.out.println("Simple test-method One. Thread id is: " + id);
-        String device = "Samsung Galaxy S8 Plus";
-        DesiredCapabilities caps = new DesiredCapabilities();
+           long id = Thread.currentThread().getId();
 
-        caps.setCapability("device", device);
-        caps.setCapability("os_version", "7.0");
-        caps.setCapability("real_mobile", "true");
-        caps.setCapability("project", "ParallelApp");
-        caps.setCapability("name", device);
-        caps.setCapability("build", buildName);
-        caps.setCapability("browserstack.local", browserstackLocal);
-        caps.setCapability("browserstack.localIdentifier", browserstackLocalIdentifier);
-        caps.setCapability("app", "Wiki2");
+           System.out.println("Simple test-method One. Thread id is: " + id);
+           String device = "Samsung Galaxy S8 Plus";
+           DesiredCapabilities caps = new DesiredCapabilities();
+
+           caps.setCapability("device", device);
+           caps.setCapability("os_version", "7.0");
+           caps.setCapability("real_mobile", "true");
+           caps.setCapability("project", "ParallelApp");
+           caps.setCapability("name", device);
+           caps.setCapability("build", buildName);
+           caps.setCapability("browserstack.local", browserstackLocal);
+           caps.setCapability("browserstack.localIdentifier", browserstackLocalIdentifier);
+           caps.setCapability("app", app);
 
 
+           AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(new URL("https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub"), caps);
 
-        AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(new URL("https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub"), caps);
+           AndroidElement searchElement = (AndroidElement) new WebDriverWait(driver, 30).until(
+                   ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Search Wikipedia")));
+           searchElement.click();
+           AndroidElement insertTextElement = (AndroidElement) new WebDriverWait(driver, 30).until(
+                   ExpectedConditions.elementToBeClickable(MobileBy.id("org.wikipedia.alpha:id/search_src_text")));
+           insertTextElement.sendKeys("BrowserStack");
+           Thread.sleep(5000);
 
-        AndroidElement searchElement = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("Search Wikipedia")));
-        searchElement.click();
-        AndroidElement insertTextElement = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.elementToBeClickable(MobileBy.id("org.wikipedia.alpha:id/search_src_text")));
-        insertTextElement.sendKeys("BrowserStack");
-        Thread.sleep(5000);
+           List<AndroidElement> allProductsName = driver.findElementsByClassName("android.widget.TextView");
+           assert (allProductsName.size() > 0);
 
-        List<AndroidElement> allProductsName = driver.findElementsByClassName("android.widget.TextView");
-        assert (allProductsName.size() > 0);
+           SessionId session = ((RemoteWebDriver) driver).getSessionId();
+           String sID = session.toString();
+           System.out.println(sID);
+           String putEndpoint = "https://api-cloud.browserstack.com/app-automate/sessions/" + sID + ".json";
 
-        SessionId session = ((RemoteWebDriver) driver).getSessionId();
-        String sID = session.toString();
-        System.out.println(sID);
-        String putEndpoint = "https://api-cloud.browserstack.com/app-automate/sessions/" + sID + ".json";
+           driver.quit();
+           String test = Unirest.put(putEndpoint)
+                   .header("Content-Type", "application/json")
+                   .header("Authorization", "Basic bGVldmFyZGFyb19zcWlGMlk6WE5SMTdhUFhQcDZOYU5aTnZ5RDI=")
+                   .body("{\n    \"status\":\"passed\",\n    \"reason\":\"it's done\"\n}")
+                   .asString()
+                   .getBody();
+           System.out.println(test);
+       
 
-        driver.quit();
-        String test = Unirest.put(putEndpoint)
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Basic bGVldmFyZGFyb19zcWlGMlk6WE5SMTdhUFhQcDZOYU5aTnZ5RDI=")
-                .body("{\n    \"status\":\"passed\",\n    \"reason\":\"it's done\"\n}")
-                .asString()
-                .getBody();
-        System.out.println(test);
     }
     @Test
     public void test2() throws InterruptedException, MalformedURLException {
@@ -107,7 +110,7 @@ public class AppTest {
         caps.setCapability("build", buildName);
         caps.setCapability("browserstack.local", browserstackLocal);
         caps.setCapability("browserstack.localIdentifier", browserstackLocalIdentifier);
-        caps.setCapability("app", "Wiki2");
+        caps.setCapability("app", app);
 
 
 
@@ -153,7 +156,7 @@ public class AppTest {
         caps.setCapability("build", buildName);
         caps.setCapability("browserstack.local", browserstackLocal);
         caps.setCapability("browserstack.localIdentifier", browserstackLocalIdentifier);
-        caps.setCapability("app", "Wiki2");
+        caps.setCapability("app", app);
 
 
 
@@ -199,7 +202,7 @@ public class AppTest {
         caps.setCapability("build", buildName);
         caps.setCapability("browserstack.local", browserstackLocal);
         caps.setCapability("browserstack.localIdentifier", browserstackLocalIdentifier);
-        caps.setCapability("app", "Wiki2");
+        caps.setCapability("app", app);
 
 
 
