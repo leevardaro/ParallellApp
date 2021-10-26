@@ -32,7 +32,7 @@ public class AppTest {
     public String URL = "https://" + username + ":" + accessKey + "@hub-cloud.browserstack.com/wd/hub";
     public String appURL;
 
-    @BeforeTest
+ /*   @BeforeTest
     public void setup() {
         String url = "https://api.browserstack.com/app-automate/upload";
 
@@ -45,7 +45,7 @@ public class AppTest {
         appURL = myObj.getString("app_url");
         System.out.println(appURL);
     }
-
+*/
     @Test
     public void test1() throws InterruptedException, MalformedURLException {
 
