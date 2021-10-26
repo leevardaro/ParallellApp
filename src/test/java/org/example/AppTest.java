@@ -19,8 +19,8 @@ import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+
+import org.testng.annotations.*;
 
 public class AppTest {
 
@@ -48,7 +48,8 @@ public class AppTest {
 */
     @Test
     public void test1() throws InterruptedException, MalformedURLException {
-
+        long id = Thread.currentThread().getId();
+        System.out.println("Simple test-method One. Thread id is: " + id);
         String device = "Samsung Galaxy S8 Plus";
         DesiredCapabilities caps = new DesiredCapabilities();
 
@@ -93,7 +94,8 @@ public class AppTest {
     }
     @Test
     public void test2() throws InterruptedException, MalformedURLException {
-
+        long id = Thread.currentThread().getId();
+        System.out.println("Simple test-method Two. Thread id is: " + id);
         String device = "Samsung Galaxy S21 Ultra";
         DesiredCapabilities caps = new DesiredCapabilities();
 
@@ -138,7 +140,8 @@ public class AppTest {
     }
     @Test
     public void test3() throws InterruptedException, MalformedURLException {
-
+        long id = Thread.currentThread().getId();
+        System.out.println("Simple test-method Three. Thread id is: " + id);
         String device = "OnePlus 9";
         DesiredCapabilities caps = new DesiredCapabilities();
 
@@ -183,7 +186,8 @@ public class AppTest {
     }
     @Test
     public void test4() throws InterruptedException, MalformedURLException {
-
+        long id = Thread.currentThread().getId();
+        System.out.println("Simple test-method Four. Thread id is: " + id);
         String device = "Google Pixel 5";
         DesiredCapabilities caps = new DesiredCapabilities();
 
