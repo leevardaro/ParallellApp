@@ -75,7 +75,7 @@
             <threadCount>5</threadCount>
             <redirectTestOutputToFile>false</redirectTestOutputToFile>
             <includes>
-              <include>MBS.MavenBS.HomeworkTest</include>
+              <include>org.example.AppTest</include>
             </includes>
 
           </configuration>
